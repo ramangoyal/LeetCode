@@ -12,24 +12,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let list1 = ListNode(1)
-        list1.next = ListNode(2)
-        list1.next?.next = ListNode(3)
-        list1.next?.next?.next = ListNode(4)
-        list1.next?.next?.next?.next = ListNode(5)
-        
-        let list2 = ListNode(1)
-        self.removeNthFromEnd(list2, 1)
-        
-//        let list1 = ListNode(1)
-//        let node1 = ListNode(8)
-//        list1.next = node1
-//
-//        let list2 = ListNode(0)
-//
-//        let output = self.addTwoNumbers(list1, list2)
-//        print(output)
-        
+        permute([1,2,3])
     }
 
 
@@ -37,6 +20,31 @@ class ViewController: UIViewController {
 
 //MARK:- LeetCode Easy Problems
 extension ViewController {
+    //https://leetcode.com/problems/permutations/
+    func permute(_ nums: [Int]) -> [[Int]] {
+        var outputArray: [[Int]] = []
+        for element in nums {
+            var startIndex = 0
+            var endIndex = nums.count - 1
+            while (startIndex != nums.count-1 || endIndex > -1) {
+                if element == nums[startIndex] {
+                    startIndex += 1
+                    continue
+                } else if element == nums[endIndex] {
+                    endIndex -= 1
+                    continue
+                }
+                let array = [element, nums[startIndex], nums[endIndex]]
+                outputArray.append(array)
+                if startIndex != nums.count-1 {
+                    startIndex += 1
+                }
+                endIndex -= 1
+            }
+        }
+        return outputArray
+    }
+    
     //https://leetcode.com/problems/remove-nth-node-from-end-of-list/
     func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
         if head?.next == nil {
