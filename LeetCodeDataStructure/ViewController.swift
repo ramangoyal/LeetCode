@@ -12,6 +12,15 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let list1 = ListNode(1)
+        list1.next = ListNode(2)
+        list1.next?.next = ListNode(3)
+        list1.next?.next?.next = ListNode(4)
+        list1.next?.next?.next?.next = ListNode(5)
+        
+        let list2 = ListNode(1)
+        self.removeNthFromEnd(list2, 1)
+        
 //        let list1 = ListNode(1)
 //        let node1 = ListNode(8)
 //        list1.next = node1
@@ -21,7 +30,6 @@ class ViewController: UIViewController {
 //        let output = self.addTwoNumbers(list1, list2)
 //        print(output)
         
-        threeSum([-1, 0, 1, 2, -1, -4])
     }
 
 
@@ -29,6 +37,26 @@ class ViewController: UIViewController {
 
 //MARK:- LeetCode Easy Problems
 extension ViewController {
+    //https://leetcode.com/problems/remove-nth-node-from-end-of-list/
+    func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
+        if head?.next == nil {
+            return nil
+        }
+        var dummy: ListNode? = ListNode(0)
+        dummy = head
+        var first = dummy
+        var second = dummy
+        for _ in 0..<n+1 {
+            first = first?.next
+        }
+        while first != nil {
+            first = first?.next
+            second = second?.next
+        }
+        second?.next = second?.next?.next
+        return dummy
+    }
+    
     //https://leetcode.com/problems/two-sum/
     func twoSum(_ nums: [Int], _ target: Int) -> [Int] {
         var dictNumber: [Int: Int] = [:]
