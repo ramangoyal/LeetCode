@@ -12,14 +12,55 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        permute([1,2,3])
+        findMedianSortedArrays([1, 7], [2, 3])
     }
 
 
 }
 
-//MARK:- LeetCode Easy Problems
+//MARK:- LeetCode Problems
 extension ViewController {
+    //https://leetcode.com/problems/median-of-two-sorted-arrays/
+    func findMedianSortedArrays(_ nums1: [Int], _ nums2: [Int]) -> Double {
+        var p1 = 0, p2 = 0
+        let l1 = nums1.count, l2 = nums2.count
+        var finalArray = [Int]()
+        while (p1 < l1 && p2 < l2) {
+            if (nums1[p1] < nums2[p2]) {
+                finalArray.append(nums1[p1])
+                p1 += 1
+            } else if (nums1[p1] > nums2[p2]) {
+                finalArray.append(nums2[p2])
+                p2 += 1
+            } else {
+                finalArray.append(nums1[p1])
+                finalArray.append(nums2[p2])
+                p1 += 1
+                p2 += 1
+            }
+        }
+        
+        while (p1 < l1) {
+            finalArray.append(nums1[p1])
+            p1 += 1
+        }
+        
+        while (p2 < l2) {
+            finalArray.append(nums2[p2])
+            p2 += 1
+        }
+        
+        let length = finalArray.count
+        let midPoint = length/2 - 1
+        if length % 2 == 0 {
+            let median = (Double(finalArray[midPoint]) + Double(finalArray[midPoint + 1]))/2.0
+            return median
+        }else {
+            let median = Double(finalArray[midPoint + 1])
+            return median
+        }
+    }
+    
     //https://leetcode.com/problems/permutations/
     func permute(_ nums: [Int]) -> [[Int]] {
         var outputArray: [[Int]] = []
